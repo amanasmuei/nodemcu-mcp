@@ -1,70 +1,113 @@
 # NodeMCU MCP (Model Context Protocol) Service
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/nodemcu/nodemcu-firmware/master/docs/img/nodemcu_logo.png" alt="NodeMCU Logo" width="150" />
+</p>
+
 A Model Context Protocol (MCP) service for managing NodeMCU devices. This service provides both a standard RESTful API/WebSocket interface and implements the [Model Context Protocol](https://modelcontextprotocol.io) for integration with AI tools like Claude Desktop.
+
+[![GitHub license](https://img.shields.io/github/license/amanasmuei/nodemcu-mcp)](https://github.com/amanasmuei/nodemcu-mcp/blob/main/LICENSE)
+[![npm version](https://badge.fury.io/js/nodemcu-mcp.svg)](https://badge.fury.io/js/nodemcu-mcp)
+
+## Overview
+
+NodeMCU MCP provides a management solution for ESP8266/NodeMCU IoT devices with these key capabilities:
+- Monitor device status and telemetry
+- Send commands to devices remotely
+- Update device configurations
+- Integration with AI assistants through MCP protocol
 
 ## Features
 
-- Device registration and management
-- Real-time communication via WebSockets
-- Configuration management
-- Command sending (restart, status, update, etc.)
-- Telemetry data collection
-- Authentication and authorization
-- API endpoints for integration with other services
-- **MCP Integration** for use with AI tools like Claude Desktop
+- 🔌 **Device Management**: Register, monitor, and control NodeMCU devices
+- 📊 **Real-time Communication**: WebSocket interface for real-time updates
+- ⚙️ **Configuration Management**: Update device settings remotely
+- 🔄 **Command Execution**: Send restart, update, status commands remotely
+- 📡 **Telemetry Collection**: Gather sensor data and device metrics
+- 🔐 **Authentication**: Secure API access with JWT authentication
+- 🧠 **AI Integration**: Work with Claude Desktop and other MCP-compatible AI tools
 
-## Installation
+## Quick Start
 
-1. Clone this repository:
-   ```
-   git clone https://github.com/yourusername/nodemcu-mcp.git
-   cd nodemcu-mcp
-   ```
+### Prerequisites
 
-2. Install dependencies:
-   ```
-   npm install
-   ```
+- Node.js 16.x or higher
+- npm or yarn
+- For the NodeMCU client: Arduino IDE with ESP8266 support
 
-3. Create a `.env` file based on the example:
+### Installation
+
+#### From npm (once published)
+
+```bash
+# Global installation (recommended for MCP integration)
+npm install -g nodemcu-mcp
+
+# Local installation
+npm install nodemcu-mcp
+```
+
+#### From source
+
+```bash
+# Clone the repository
+git clone https://github.com/amanasmuei/nodemcu-mcp.git
+cd nodemcu-mcp
+
+# Install dependencies
+npm install
+
+# Optional: Install globally for MCP integration
+npm install -g .
+```
+
+### Configuration
+
+1. Create a `.env` file based on the example:
    ```
    cp .env.example .env
    ```
 
-4. Update the `.env` file with your settings.
-
-5. Install globally (optional):
+2. Update the `.env` file with your settings:
    ```
-   npm install -g .
+   # Server Configuration
+   PORT=3000
+   HOST=localhost
+
+   # Security
+   JWT_SECRET=your_strong_random_secret_key
+
+   # Log Level (error, warn, info, debug)
+   LOG_LEVEL=info
    ```
 
 ## Usage
 
-### As Standard API Server
+### Running as API Server
 
 Development mode with auto-restart:
-```
+```bash
 npm run dev
 ```
 
 Production mode:
-```
+```bash
 npm start
 ```
 
-### As MCP Server
+### Running as MCP Server
 
-Run in MCP mode for integration with AI tools:
-```
+For integration with Claude Desktop or other MCP clients:
+```bash
 npm run mcp
 ```
 
 If installed globally:
-```
+```bash
 nodemcu-mcp --mode=mcp
 ```
 
-### CLI Options
+### Command Line Options
 
 ```
 Usage: nodemcu-mcp [options]
@@ -76,102 +119,225 @@ Options:
   --version    Show version number        [boolean]
 ```
 
-## MCP Integration
+## MCP Integration with Claude Desktop
 
-This tool implements the [Model Context Protocol (MCP)](https://modelcontextprotocol.io), allowing it to be used as a tool with AI assistants like Claude Desktop.
+This tool integrates with AI assistants that support the Model Context Protocol. Here's how to set it up with Claude Desktop:
 
-### Available MCP Tools
+1. Ensure you have the latest version of [Claude Desktop](https://claude.ai/desktop)
 
-- **list-devices**: List all registered NodeMCU devices and their status
-- **get-device**: Get detailed information about a specific NodeMCU device
-- **send-command**: Send a command to a NodeMCU device
-- **update-config**: Update the configuration of a NodeMCU device
-
-### Using with Claude Desktop
-
-To use this tool with Claude Desktop:
-
-1. Install the package globally:
+2. Install this package globally:
    ```
    npm install -g nodemcu-mcp
    ```
 
-2. Add it to Claude Desktop's MCP tools directory.
+3. Configure Claude Desktop to use this MCP server by modifying your Claude Desktop configuration:
 
-3. Claude will now have access to the NodeMCU management tools.
+   Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (create if it doesn't exist):
 
-### MCP Protocol Details
+   ```json
+   {
+       "mcpServers": {
+           "nodemcu": {
+               "command": "nodemcu-mcp",
+               "args": ["--mode=mcp"]
+           }
+       }
+   }
+   ```
 
-This implementation follows the Model Context Protocol version 0.1, using the subprocess execution type. The tool implements the standard MCP JSON message format for communication, including:
+4. Restart Claude Desktop
 
-- `initialize` message with tool definitions
-- `execute_tool` requests from the client
-- `tool_response` responses with results
+5. You can now ask Claude to help you manage your NodeMCU devices with prompts like:
+   - "List all my NodeMCU devices"
+   - "Get details about my living room sensor"
+   - "Send a restart command to my kitchen sensor"
+   - "Update the reporting interval on my bedroom sensor to 60 seconds"
 
-## API Endpoints
+## API Documentation
 
 ### Authentication
 
-- **POST /api/auth/login** - Login with username and password
+- **POST /api/auth/login** - Login and get JWT token
   ```json
   {
     "username": "admin",
     "password": "admin123"
   }
   ```
+  
+  Response:
+  ```json
+  {
+    "message": "Login successful",
+    "token": "your.jwt.token",
+    "user": {
+      "id": 1,
+      "username": "admin",
+      "role": "admin"
+    }
+  }
+  ```
 
 - **POST /api/auth/validate** - Validate JWT token
   ```json
   {
-    "token": "your-jwt-token"
+    "token": "your.jwt.token"
   }
   ```
 
-### Devices
+### Devices API
 
-All device endpoints require authentication with a JWT token in the Authorization header:
+All device endpoints require authentication with a JWT token:
 ```
-Authorization: Bearer your-jwt-token
+Authorization: Bearer your.jwt.token
 ```
 
-- **GET /api/devices** - Get all devices
-- **GET /api/devices/:id** - Get device by ID
-- **POST /api/devices** - Add new device
-- **PUT /api/devices/:id** - Update device
-- **DELETE /api/devices/:id** - Delete device
-- **POST /api/devices/:id/command** - Send command to device
+#### List Devices
+
+```
+GET /api/devices
+```
+
+Response:
+```json
+{
+  "count": 1,
+  "devices": [
+    {
+      "id": "nodemcu-001",
+      "name": "Living Room Sensor",
+      "type": "ESP8266",
+      "status": "online",
+      "ip": "192.168.1.100",
+      "firmware": "1.0.0",
+      "lastSeen": "2023-05-15T14:30:45.123Z"
+    }
+  ]
+}
+```
+
+#### Get Device Details
+
+```
+GET /api/devices/:id
+```
+
+Response:
+```json
+{
+  "id": "nodemcu-001",
+  "name": "Living Room Sensor",
+  "type": "ESP8266",
+  "status": "online",
+  "ip": "192.168.1.100",
+  "firmware": "1.0.0",
+  "lastSeen": "2023-05-15T14:30:45.123Z",
+  "config": {
+    "reportInterval": 30,
+    "debugMode": false,
+    "ledEnabled": true
+  },
+  "lastTelemetry": {
+    "temperature": 23.5,
+    "humidity": 48.2,
+    "uptime": 3600,
+    "heap": 35280,
+    "rssi": -68
+  }
+}
+```
+
+#### Send Command to Device
+
+```
+POST /api/devices/:id/command
+```
+
+Request:
+```json
+{
+  "command": "restart",
+  "params": {}
+}
+```
+
+Response:
+```json
+{
+  "message": "Command sent to device",
+  "command": "restart",
+  "params": {},
+  "response": {
+    "success": true,
+    "message": "Device restarting"
+  }
+}
+```
 
 ## WebSocket Protocol
 
-The WebSocket server is available at the root path of the server (`ws://your-server:3000/`).
+The WebSocket server is available at the root path: `ws://your-server:3000/`
 
-## NodeMCU Client
+For details on the WebSocket protocol messages, refer to the code or the examples directory.
 
-An example Arduino sketch for NodeMCU devices is provided in the `examples` directory.
+## NodeMCU Client Setup
 
-## Publishing to Marketplaces
+Refer to the Arduino sketch in the `examples` directory for a complete client implementation.
 
-To publish this tool to marketplaces:
+### Key Steps
 
-1. **NPM Registry**:
+1. Install required libraries in Arduino IDE:
+   - ESP8266WiFi
+   - WebSocketsClient
+   - ArduinoJson
+
+2. Configure the sketch with your WiFi and server settings:
+   ```cpp
+   // WiFi credentials
+   const char* ssid = "YOUR_WIFI_SSID";
+   const char* password = "YOUR_WIFI_PASSWORD";
+
+   // MCP Server settings
+   const char* mcpHost = "your-server-ip";
+   const int mcpPort = 3000;
    ```
-   npm login
-   npm publish
-   ```
 
-2. **GitHub Marketplace**:
-   Create a GitHub Action workflow and publish through GitHub Marketplace.
+3. Upload the sketch to your NodeMCU device
 
-3. **Claude Plugins Directory**:
-   Follow the MCP documentation to submit your tool to Claude's plugin directory.
+## Development
 
-## Security Considerations
+### Project Structure
 
-- The example uses a simple in-memory user database with plain text passwords. In a production environment, use a proper database with hashed passwords.
-- Generate a strong, random JWT secret for your `.env` file.
-- Consider using HTTPS/WSS for secure communication.
-- Implement rate limiting to prevent abuse.
+```
+nodemcu-mcp/
+├── bin/                # CLI scripts
+├── examples/           # Example client code
+├── middleware/         # Express middleware
+├── routes/             # API routes
+├── services/           # Business logic
+├── .env.example        # Environment variables example
+├── index.js            # API server entry point
+├── mcp_server.js       # MCP protocol implementation
+├── mcp-manifest.json   # MCP manifest
+└── package.json        # Project configuration
+```
+
+### Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-MIT 
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- [Model Context Protocol](https://modelcontextprotocol.io) for the integration specification
+- [NodeMCU](https://nodemcu.com) for the amazing IoT platform
+- [Anthropic](https://anthropic.com) for Claude Desktop 
