@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeMCU MCP Logo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #00a1e9;
+            margin-bottom: 5px;
+        }
+        p {
+            color: #555;
+            max-width: 600px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        .buttons {
+            margin-top: 30px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #00a1e9;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #0077b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="nodemcu-logo.svg" alt="NodeMCU MCP Logo" width="300">
+    </div>
+    
+    <h1>NodeMCU MCP Service</h1>
+    <p>
+        A Model Context Protocol (MCP) service for managing NodeMCU devices.
+        This service provides both a standard RESTful API/WebSocket interface and implements the
+        Model Context Protocol for integration with AI tools like Claude Desktop.
+    </p>
+    
+    <div class="buttons">
+        <a href="/health" class="button">Service Health</a>
+        <a href="https://github.com/amanasmuei/nodemcu-mcp" class="button">GitHub</a>
+    </div>
+</body>
+</html> 

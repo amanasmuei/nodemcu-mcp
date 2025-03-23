@@ -5,13 +5,13 @@
   "execution_type": "subprocess",
   "bin": "bin/cli.js",
   "args": ["--mode=mcp"],
-  "icon": "https://raw.githubusercontent.com/nodemcu/nodemcu-firmware/master/docs/img/nodemcu_logo.png",
+  "icon": "assets/nodemcu-logo.svg",
   "version": "1.0.0",
   "publisher": {
     "name": "NodeMCU MCP Team",
-    "url": "https://github.com/yourusername/nodemcu-mcp"
+    "url": "https://github.com/amanasmuei/nodemcu-mcp"
   },
-  "repository": "https://github.com/yourusername/nodemcu-mcp",
+  "repository": "https://github.com/amanasmuei/nodemcu-mcp",
   "categories": ["IoT", "DevTools", "Hardware"],
   "supports": {
     "platforms": ["linux", "macos", "windows"]

@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const WebSocket = require('ws');
 const http = require('http');
+const path = require('path');
 const { deviceRouter } = require('./routes/devices');
 const { authRouter } = require('./routes/auth');
 const { verifyToken } = require('./middleware/auth');
@@ -20,6 +21,14 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Static assets
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
+// Root route serves the logo page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'assets/index.html'));
+});
 
 // Routes
 app.use('/api/auth', authRouter);

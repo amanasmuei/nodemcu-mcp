@@ -1,7 +1,7 @@
 # NodeMCU MCP (Model Context Protocol) Service
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/nodemcu/nodemcu-firmware/master/docs/img/nodemcu_logo.png" alt="NodeMCU Logo" width="150" />
+  <img src="assets/nodemcu-logo.svg" alt="NodeMCU MCP Logo" width="200" />
 </p>
 
 A Model Context Protocol (MCP) service for managing NodeMCU devices. This service provides both a standard RESTful API/WebSocket interface and implements the [Model Context Protocol](https://modelcontextprotocol.io) for integration with AI tools like Claude Desktop.
@@ -310,6 +310,7 @@ Refer to the Arduino sketch in the `examples` directory for a complete client im
 
 ```
 nodemcu-mcp/
+├── assets/             # Logo and other static assets
 ├── bin/                # CLI scripts
 ├── examples/           # Example client code
 ├── middleware/         # Express middleware
