@@ -17,6 +17,23 @@ NodeMCU MCP provides a management solution for ESP8266/NodeMCU IoT devices with 
 - Update device configurations
 - Integration with AI assistants through MCP protocol
 
+## Visualizations
+
+<p align="center">
+  <img src="assets/architecture-diagram.svg" alt="NodeMCU MCP Architecture" width="600" />
+  <br><em>System Architecture Overview</em>
+</p>
+
+<p align="center">
+  <img src="assets/dataflow-diagram.svg" alt="NodeMCU MCP Data Flow" width="600" />
+  <br><em>Data Flow Between Components</em>
+</p>
+
+<p align="center">
+  <img src="assets/mcp-workflow.svg" alt="Claude + NodeMCU MCP Workflow" width="600" />
+  <br><em>How Claude Desktop Interacts with NodeMCU Devices</em>
+</p>
+
 ## Features
 
 - 🔌 **Device Management**: Register, monitor, and control NodeMCU devices
