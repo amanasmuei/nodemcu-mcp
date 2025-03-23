@@ -37,18 +37,33 @@ if (runMCP) {
   console.log('Starting in MCP mode...');
   
   if (runAPI) {
-    // If running both, the mcp_server.js will start its own API server
-    const mcpServer = spawn(process.execPath, [path.join(__dirname, '../mcp_server.js')], {
+    // If running both, use MCP SDK server implementation which will only focus on MCP protocol
+    const mcpServer = spawn(process.execPath, [path.join(__dirname, '../mcp_server_sdk.js')], {
       stdio: 'inherit'
+    });
+    
+    // Start the API server as a separate process
+    const apiServer = spawn(process.execPath, [path.join(__dirname, '../index.js')], {
+      stdio: 'inherit',
+      env: { ...process.env, PORT: argv.port }
     });
     
     mcpServer.on('close', (code) => {
       console.log(`MCP server exited with code ${code}`);
+      apiServer.kill();
       process.exit(code);
     });
+    
+    apiServer.on('close', (code) => {
+      console.log(`API server exited with code ${code}`);
+      if (mcpServer.exitCode === null) {
+        mcpServer.kill();
+        process.exit(code);
+      }
+    });
   } else {
-    // MCP mode only - directly run the MCP server
-    require('../mcp_server.js');
+    // MCP mode only - directly run the MCP server using the SDK implementation
+    require('../mcp_server_sdk.js');
   }
 } else if (runAPI) {
   // API mode only

@@ -136,39 +136,55 @@ Options:
   --version    Show version number        [boolean]
 ```
 
-## MCP Integration with Claude Desktop
+## MCP Integration
 
-This tool integrates with AI assistants that support the Model Context Protocol. Here's how to set it up with Claude Desktop:
+This project now uses the official Model Context Protocol (MCP) TypeScript SDK to provide integration with Claude for Desktop and other MCP clients.
 
-1. Ensure you have the latest version of [Claude Desktop](https://claude.ai/desktop)
+### MCP Tools
 
-2. Install this package globally:
-   ```
-   npm install -g nodemcu-mcp
-   ```
+The following tools are available through the MCP interface:
 
-3. Configure Claude Desktop to use this MCP server by modifying your Claude Desktop configuration:
+- **list-devices**: List all registered NodeMCU devices and their status
+- **get-device**: Get detailed information about a specific NodeMCU device
+- **send-command**: Send a command to a NodeMCU device
+- **update-config**: Update the configuration of a NodeMCU device
 
-   Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (create if it doesn't exist):
+### Using with Claude for Desktop
 
-   ```json
-   {
-       "mcpServers": {
-           "nodemcu": {
-               "command": "nodemcu-mcp",
-               "args": ["--mode=mcp"]
-           }
-       }
-   }
-   ```
+To use this server with Claude for Desktop:
 
-4. Restart Claude Desktop
+1. Install Claude for Desktop from [https://claude.ai/desktop](https://claude.ai/desktop)
+2. Configure Claude for Desktop by editing `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
-5. You can now ask Claude to help you manage your NodeMCU devices with prompts like:
-   - "List all my NodeMCU devices"
-   - "Get details about my living room sensor"
-   - "Send a restart command to my kitchen sensor"
-   - "Update the reporting interval on my bedroom sensor to 60 seconds"
+```json
+{
+  "mcpServers": {
+    "nodemcu": {
+      "command": "node",
+      "args": [
+        "/ABSOLUTE/PATH/TO/YOUR/PROJECT/mcp_server_sdk.js"
+      ]
+    }
+  }
+}
+```
+
+3. Restart Claude for Desktop
+4. You should now see the NodeMCU tools in the Claude for Desktop interface
+
+### Running the MCP Server Standalone
+
+To run the MCP server directly:
+
+```bash
+npm run mcp
+```
+
+Or using the CLI:
+
+```bash
+./bin/cli.js --mode=mcp
+```
 
 ## API Documentation
 

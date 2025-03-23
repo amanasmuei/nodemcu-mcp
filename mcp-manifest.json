@@ -3,8 +3,8 @@
   "name": "NodeMCU Manager",
   "description": "A Model Context Protocol (MCP) tool for managing NodeMCU (ESP8266) IoT devices",
   "execution_type": "subprocess",
-  "bin": "bin/cli.js",
-  "args": ["--mode=mcp"],
+  "bin": "node",
+  "args": ["mcp_server_sdk.js"],
   "icon": "assets/nodemcu-logo.svg",
   "version": "1.0.0",
   "publisher": {
