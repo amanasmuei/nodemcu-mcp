@@ -1,0 +1,64 @@
+{
+  "schema_version": "0.1",
+  "name": "NodeMCU Manager",
+  "description": "A Model Context Protocol (MCP) tool for managing NodeMCU (ESP8266) IoT devices",
+  "execution_type": "subprocess",
+  "bin": "bin/cli.js",
+  "args": ["--mode=mcp"],
+  "icon": "https://raw.githubusercontent.com/nodemcu/nodemcu-firmware/master/docs/img/nodemcu_logo.png",
+  "version": "1.0.0",
+  "publisher": {
+    "name": "NodeMCU MCP Team",
+    "url": "https://github.com/yourusername/nodemcu-mcp"
+  },
+  "repository": "https://github.com/yourusername/nodemcu-mcp",
+  "categories": ["IoT", "DevTools", "Hardware"],
+  "supports": {
+    "platforms": ["linux", "macos", "windows"]
+  },
+  "inputs": {
+    "list-devices": {
+      "description": "List all registered NodeMCU devices and their status",
+      "parameters": {}
+    },
+    "get-device": {
+      "description": "Get detailed information about a specific NodeMCU device",
+      "parameters": {
+        "deviceId": {
+          "type": "string",
+          "description": "The ID of the device to get information about"
+        }
+      }
+    },
+    "send-command": {
+      "description": "Send a command to a NodeMCU device",
+      "parameters": {
+        "deviceId": {
+          "type": "string",
+          "description": "The ID of the device to send the command to"
+        },
+        "command": {
+          "type": "string",
+          "description": "The command to send (restart, update, status, etc.)"
+        },
+        "params": {
+          "type": "object",
+          "description": "Optional parameters for the command"
+        }
+      }
+    },
+    "update-config": {
+      "description": "Update the configuration of a NodeMCU device",
+      "parameters": {
+        "deviceId": {
+          "type": "string",
+          "description": "The ID of the device to update configuration for"
+        },
+        "config": {
+          "type": "object",
+          "description": "Configuration parameters to update"
+        }
+      }
+    }
+  }
+} 
