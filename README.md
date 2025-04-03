@@ -4,10 +4,13 @@
   <img src="assets/nodemcu-logo.svg" alt="NodeMCU MCP Logo" width="200" />
 </p>
 
-A Model Context Protocol (MCP) service for managing NodeMCU devices. This service provides both a standard RESTful API/WebSocket interface and implements the [Model Context Protocol](https://modelcontextprotocol.io) for integration with AI tools like Claude Desktop.
 
 [![GitHub license](https://img.shields.io/github/license/amanasmuei/nodemcu-mcp)](https://github.com/amanasmuei/nodemcu-mcp/blob/main/LICENSE)
 [![npm version](https://badge.fury.io/js/nodemcu-mcp.svg)](https://badge.fury.io/js/nodemcu-mcp)
+[![smithery badge](https://smithery.ai/badge/@amanasmuei/nodemcu-mcp)](https://smithery.ai/server/@amanasmuei/nodemcu-mcp)
+
+
+A Model Context Protocol (MCP) service for managing NodeMCU devices. This service provides both a standard RESTful API/WebSocket interface and implements the [Model Context Protocol](https://modelcontextprotocol.io) for integration with AI tools like Claude Desktop.
 
 ## Overview
 
@@ -53,6 +56,14 @@ NodeMCU MCP provides a management solution for ESP8266/NodeMCU IoT devices with 
 - For the NodeMCU client: Arduino IDE with ESP8266 support
 
 ### Installation
+
+#### Installing via Smithery
+
+To install NodeMCU Manager for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@amanasmuei/nodemcu-mcp):
+
+```bash
+npx -y @smithery/cli install @amanasmuei/nodemcu-mcp --client claude
+```
 
 #### From npm (once published)
 
