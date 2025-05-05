@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/amanasmuei-mcp-server-nodemcu-badge.png)](https://mseep.ai/app/amanasmuei-mcp-server-nodemcu)
+
 # NodeMCU MCP (Model Context Protocol) Service
 
 <p align="center">
